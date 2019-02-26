@@ -8,7 +8,7 @@
  *
  * @return array|mixed
  */
-function startTimer() {
+function microtimer() {
 	// Page timer
 	$time = microtime();
 	$time = explode(' ', $time);
@@ -314,7 +314,7 @@ function htmlHeader() {
 	</head>
 	<!-- Header -->
 	<body>
-	
+	<br />
 	<div class="container">
 		<header>
 			<h3>Simple Server Health</h3>

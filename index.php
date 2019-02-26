@@ -11,6 +11,13 @@
  * @year: 2019
  *
  **/
+
+// Start timing script load time
+$time = microtime();
+$time = explode(' ', $time);
+$startTime = $time[1] + $time[0];
+
+
 require_once "_functions.php";
 require_once "_conf.php";
 
@@ -23,9 +30,6 @@ header("Pragma: no-cache");
 /**
  * Do all the processing before outputting anything as if there's any errors we'll return different apache response codes
  */
-
-// Start timing script load time
-$startTime = startTimer();
 
 // Has an error occured?
 $errorStatus = false;
@@ -67,8 +71,10 @@ $mysqlError = mysqlError();
 
 /**
  * Page load time by server
+ *
+ * Do here to try and update error status if load is taking really long
  */
-$endTime = startTimer();
+$endTime = microtimer();
 $loadTime = getLoadTime($startTime, $endTime);
 $speedStatus = getSpeedStatus();
 $speedError = getSpeedError();
@@ -142,6 +148,18 @@ htmlHeader();
                     <h6 class="card-subtitle mb-2 text-muted">STATUS: <?= $apacheStatus; ?></h6>
                 </div>
             </div>
+            
+            <?php
+			/**
+			 * Page load time by server
+             *
+             * Re-get load time here to better reflect actual load time taken to get here
+			 */
+			$endTime = microtimer();
+			$loadTime = getLoadTime($startTime, $endTime);
+			$speedStatus = getSpeedStatus();
+			$speedError = getSpeedError();
+            ?>
 
             <div class="card <?= !empty($speedError) ? "alert-danger" : ""; ?>">
                 <div class="card-body">
