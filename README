@@ -1,0 +1,1 @@
+Small PHP script to give a brief overview of the server health. Good for use on shared hosts like cPanel where the dashboard CPU & RAM usage is of only your account and not the entire server.
