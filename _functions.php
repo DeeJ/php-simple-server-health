@@ -210,6 +210,7 @@ function avgLoadPerCore($cores = 1)
     return printLoad($perCore, 1);
 }
 
+
 /**
  * Get CPU load errors
  *
@@ -221,6 +222,9 @@ function getCpuErrors()
     return @$cpuErrors;
 }
 
+/**
+ * Get RAM info
+ */
 function getRam()
 {
 
@@ -253,18 +257,36 @@ function getRam()
     fclose($fh);
 }
 
+
+/**
+ * Get total ram
+ *
+ * @return string
+ */
 function totalRam()
 {
     global $errorStatus, $ramTotal, $ramFree, $ramAvailable, $swapTotal, $swapFree;
     return convert(@$ramTotal * 1000);
 }
 
+
+/**
+ * Get free ram
+ *
+ * @return string
+ */
 function freeRam()
 {
     global $errorStatus, $ramTotal, $ramFree, $ramAvailable, $swapTotal, $swapFree;
     return convert(@$ramFree * 1000);
 }
 
+
+/**
+ * Get available ram
+ *
+ * @return false|string
+ */
 function availableRam()
 {
     global $errorStatus, $ramTotal, $ramFree, $ramAvailable, $swapTotal, $swapFree, $ramError;
@@ -340,6 +362,10 @@ function getRamErrors()
     return @$ramError;
 }
 
+
+/**
+ * Header
+ */
 function htmlHeader()
 {
     ?>
@@ -395,6 +421,10 @@ function htmlHeader()
     <?php
 }
 
+
+/**
+ * Footer
+ */
 function htmlFooter()
 {
     ?>
@@ -443,6 +473,7 @@ function printLoad($load, $cores = 1)
     }
 
 }
+
 
 /**
  * Bits to something more human readable
@@ -496,10 +527,17 @@ function num_cpus()
     return $numCpus;
 }
 
+
+/**
+ * Get OS version
+ *
+ * @return false|string
+ */
 function getServerVersion()
 {
     return @file_get_contents(VERSION_INFO);
 }
+
 
 /**
  * Deej debug / dump & die

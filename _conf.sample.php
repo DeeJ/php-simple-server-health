@@ -24,7 +24,6 @@ if (file_exists($wpConfig)) {
 	require_once $wpConfig;
 }
 
-
 // If not WP, set DB logins
 if (!defined("DB_HOST")) {
 	define("DB_HOST", "");
@@ -38,6 +37,7 @@ if (!defined("DB_PASSWORD")) {
 if (!defined("DB_NAME")) {
 	define("DB_NAME", "");
 }
+
 
 /**
  * Include version info?

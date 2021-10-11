@@ -108,6 +108,7 @@ htmlHeader();
 					<?php } ?>
                     <p class="card-text small">
                         If avg per core:<br/>
+                        &bull; < 0.3 - GREAT<br/>
                         &bull; < 0.7 - GOOD<br/>
                         &bull; 0.7 to 1 - HIGH LOAD<br/>
                         &bull; > 1 - OVERLOADED!!!
