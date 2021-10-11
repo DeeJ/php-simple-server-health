@@ -3,6 +3,13 @@
  * PHP Simple Server Health Functions
  */
 
+
+// Prevent direct load
+if (!defined('PSSH')) {
+    header("HTTP/1.1 404 Not Found");
+    exit();
+}
+
 /**
  * Get mirotime for calculating page load speed
  *

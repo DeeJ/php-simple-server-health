@@ -17,6 +17,8 @@ $time = microtime();
 $time = explode(' ', $time);
 $startTime = $time[1] + $time[0];
 
+define('PSSH', true);
+
 
 require_once "_functions.php";
 require_once "_conf.php";

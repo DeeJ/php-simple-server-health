@@ -3,11 +3,17 @@
  * PHP Simple Server Health Config
  */
 
+// Prevent direct load
+if (!defined('PSSH')) {
+    header("HTTP/1.1 404 Not Found");
+    exit();
+}
+
 /**
  * DEBUG - Disable on any production system!!
  */
 error_reporting(E_ALL);
-ini_set("display_errors", true);
+ini_set("display_errors", false);
 
 /**
  * DATABASE
