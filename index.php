@@ -69,6 +69,7 @@ $ramErrors = getRamErrors();
  **/
 $mysqlStatus = mysqlStatus();
 $mysqlError = mysqlError();
+$mysqlQueryTime = getMysqlQueryTime();
 
 
 /**
@@ -141,6 +142,7 @@ htmlHeader();
 					<?php if (!empty($mysqlError)) { ?>
                         <p class="card-text"><?= $mysqlError; ?></p>
 					<?php } ?>
+                    <h6 class="card-subtitle mb-2 text-muted">QUERY TIME: <?= $mysqlQueryTime; ?></h6>
                 </div>
             </div>
 
@@ -171,7 +173,6 @@ htmlHeader();
                     <p class="card-text small">This page should load in well under 1 second</p>
                 </div>
             </div>
-
 
         </div>
     </div>

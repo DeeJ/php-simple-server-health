@@ -39,6 +39,11 @@ if (!defined("DB_NAME")) {
 	define("DB_NAME", "");
 }
 
+/**
+ * Include version info?
+ */
+define("SHOW_VERSION_INFO", false);
+
 
 /**
  * PROC Memory info
@@ -49,6 +54,11 @@ define("MEM_INFO", "/proc/meminfo");
  * PROC CPU info
  */
 define("CPU_INFO", "/proc/cpuinfo");
+
+/**
+ * PROC Version info
+ */
+define("VERSION_INFO", "/proc/version");
 
 
 /**
