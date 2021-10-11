@@ -38,6 +38,12 @@ if (!defined("DB_NAME")) {
 	define("DB_NAME", "");
 }
 
+/**
+ * Autorefresh
+ */
+define("AUTO_REFRESH", true);
+define("REFRESH_SECONDS", 60);
+
 
 /**
  * Include version info?

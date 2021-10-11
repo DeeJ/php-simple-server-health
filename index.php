@@ -89,23 +89,23 @@ htmlHeader();
 
 
     <div class="container">
-		<?php if ($errorStatus) { ?>
+        <?php if ($errorStatus) { ?>
             <div class="alert alert-danger" role="alert">
                 <h1>BORKED!</h1>
             </div>
-		<?php } ?>
+        <?php } ?>
         <div class="card-columns">
-			
-            
+
+
             <div class="card <?= !empty($cpuErrors) ? "alert-danger" : ""; ?>">
                 <div class="card-body">
                     <h5 class="card-title">CPU</h5>
                     <h6 class="card-subtitle mb-2 text-muted">CORES: <?= $cores; ?></h6>
                     <h6 class="card-subtitle mb-2 text-muted">LOAD AVG: <?= $serverLoad; ?></h6>
                     <h6 class="card-subtitle mb-2 text-muted">AVG PER CORE: <?= $avgLoadPerCore; ?></h6>
-					<?php if (!empty($cpuErrors)) { ?>
+                    <?php if (!empty($cpuErrors)) { ?>
                         <p class="card-text"><?= $cpuErrors; ?></p>
-					<?php } ?>
+                    <?php } ?>
                     <p class="card-text small">
                         If avg per core:<br/>
                         &bull; < 0.3 - GREAT<br/>
@@ -121,18 +121,18 @@ htmlHeader();
                     <h5 class="card-title">MEMORY</h5>
                     <h6 class="card-subtitle mb-2 text-muted">TOTAL: <?= $totalRam; ?></h6>
                     <h6 class="card-subtitle mb-2 text-muted">FREE: <?= $freeRam; ?></h6>
-					<?php if ($availableRam !== false) { ?>
+                    <?php if ($availableRam !== false) { ?>
                         <h6 class="card-subtitle mb-2 text-muted">AVAILABLE: <?= $availableRam; ?></h6>
-					<?php } ?>
-					<?php if ($totalSwap !== false) { ?>
+                    <?php } ?>
+                    <?php if ($totalSwap !== false) { ?>
                         <h6 class="card-subtitle mb-2 text-muted">TOTAL SWAP: <?= $totalSwap; ?></h6>
-					<?php } ?>
-					<?php if ($freeSwap !== false) { ?>
+                    <?php } ?>
+                    <?php if ($freeSwap !== false) { ?>
                         <h6 class="card-subtitle mb-2 text-muted">FREE SWAP: <?= $freeSwap; ?></h6>
-					<?php } ?>
-					<?php if (!empty($ramErrors)) { ?>
+                    <?php } ?>
+                    <?php if (!empty($ramErrors)) { ?>
                         <p class="card-text"><?= $ramErrors; ?></p>
-					<?php } ?>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -140,9 +140,9 @@ htmlHeader();
                 <div class="card-body">
                     <h5 class="card-title">MySQL</h5>
                     <h6 class="card-subtitle mb-2 text-muted">STATUS: <?= $mysqlStatus; ?></h6>
-					<?php if (!empty($mysqlError)) { ?>
+                    <?php if (!empty($mysqlError)) { ?>
                         <p class="card-text"><?= $mysqlError; ?></p>
-					<?php } ?>
+                    <?php } ?>
                     <h6 class="card-subtitle mb-2 text-muted">QUERY TIME: <?= $mysqlQueryTime; ?></h6>
                 </div>
             </div>
@@ -153,17 +153,17 @@ htmlHeader();
                     <h6 class="card-subtitle mb-2 text-muted">STATUS: <?= $apacheStatus; ?></h6>
                 </div>
             </div>
-            
+
             <?php
-			/**
-			 * Page load time by server
+            /**
+             * Page load time by server
              *
              * Re-get load time here to better reflect actual load time taken to get here
-			 */
-			$endTime = microtimer();
-			$loadTime = getLoadTime($startTime, $endTime);
-			$speedStatus = getSpeedStatus();
-			$speedError = getSpeedError();
+             */
+            $endTime = microtimer();
+            $loadTime = getLoadTime($startTime, $endTime);
+            $speedStatus = getSpeedStatus();
+            $speedError = getSpeedError();
             ?>
 
             <div class="card <?= !empty($speedError) ? "alert-danger" : ""; ?>">
@@ -176,6 +176,30 @@ htmlHeader();
             </div>
 
         </div>
+
+        <?php if (AUTO_REFRESH && REFRESH_SECONDS) { ?>
+            <p class="text-muted text-center"><small>Refreshing in: <span id="refresh-in"></span></small></p>
+            <script>
+                const refreshRate = <?=REFRESH_SECONDS;?>+1;
+                const url = window.location.href;
+                var timeLeft = refreshRate;
+                var reloadRequest = false;
+                var timer = setInterval(function() {
+                    timeLeft--;
+                    if (!timeLeft) {
+                        document.getElementById("refresh-in").innerHTML = "now...";
+                        if (!reloadRequest) {
+                            location.reload();
+                            reloadRequest = true;
+                        }
+                    }
+                    else {
+                        document.getElementById("refresh-in").innerHTML = timeLeft+"s";
+                    }
+                }, 1000);
+            </script>
+        <?php } ?>
+
     </div>
 
 
