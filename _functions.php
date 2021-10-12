@@ -306,7 +306,7 @@ function availableRam()
         $errorStatus = true;
         $ramError = "Less then 10% RAM available";
 
-    } else if ($ramAvailable < $ram25 || true) {
+    } else if ($ramAvailable < $ram25) {
         $available .= "<span class='orange'>";
     } else {
         $available .= "<span class='green'>";
