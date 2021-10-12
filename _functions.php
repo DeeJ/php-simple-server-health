@@ -43,21 +43,21 @@ function getLoadTime($startTime, $endTime)
     $speedError = "";
 
     if ($totalTime >= 1) {
-        $loadTime .= "<span style='color: #" . RED . ";'>";
-        $speedStatus = "<span style='color: #" . RED . ";'>SLOW</span>";
+        $loadTime .= "<span class='red'>";
+        $speedStatus = "<span class='red'>SLOW</span>";
     } else if ($totalTime >= 0.3) {
-        $loadTime .= "<span style='color: #" . ORANGE . ";'>";
-        $speedStatus = "<span style='color: #" . ORANGE . ";'>OK</span>";
+        $loadTime .= "<span class='orange'>";
+        $speedStatus = "<span class='orange'>OK</span>";
     } else {
-        $loadTime .= "<span style='color: #" . GREEN . ";'>";
-        $speedStatus = "<span style='color: #" . GREEN . ";'>GREAT</span>";
+        $loadTime .= "<span class='green'>";
+        $speedStatus = "<span class='green'>GREAT</span>";
     }
     $loadTime .= $totalTime . 's</span>';
 
 
     if ($totalTime >= 2) {
         $errorStatus = true;
-        $speedStatus = "<span style='color: #" . RED . ";'>CATASTROPHICALLY SLOW!</span>";
+        $speedStatus = "<span class='red'>CATASTROPHICALLY SLOW!</span>";
         $speedError = "SLOW!";
     }
 
@@ -84,7 +84,7 @@ function getSpeedError()
  */
 function apacheStatus()
 {
-    return "<span style='color: #" . GREEN . ";'>OK</span>";
+    return "<span  class='green'>OK</span>";
 }
 
 /**
@@ -107,15 +107,15 @@ function mysqlStatus()
         http_response_code(500);
         $errorStatus = true;
 
-        $status = "<span style='color: #" . RED . ";'>BORKED</span>";
-        $mysqlError .= "<span style='color: #" . RED . ";'>Error: Unable to connect to MySQL.</span><br />";
+        $status = "<span class='red'>BORKED</span>";
+        $mysqlError .= "<span class='red'>Error: Unable to connect to MySQL.</span><br />";
         if (!empty($_GET['debug'])) {
             $mysqlError .= "Debugging errno: " . mysqli_connect_errno() . "<br />";
             $mysqlError .= "Debugging error: " . mysqli_connect_error() . "<br />";
             $mysqlError .= "Info: " . mysqli_get_host_info($link);
         }
     } else {
-        $status = "<span style='color: #" . GREEN . ";'>OK</span>";
+        $status = "<span  class='green'>OK</span>";
     }
 
     @mysqli_close($link);
@@ -139,7 +139,7 @@ function mysqlError()
  */
 function getMysqlQueryTime() {
 
-    $errorText = "<span style='color: #" . RED . ";'>Failed to get query time</span>";
+    $errorText = "<span class='red'>Failed to get query time</span>";
 
     global $mysqlError;
     if (!empty($mysqlError)) {
@@ -187,7 +187,7 @@ function cpuLoad($cores = 1)
 
     if (($load[0] / $cores) >= 1) {
         http_response_code(500);
-        $cpuErrors = "<span style='color: #" . RED . ";'>High CPU load</span>";
+        $cpuErrors = "<span class='red'>High CPU load</span>";
         $errorStatus = true;
     }
 
@@ -301,15 +301,15 @@ function availableRam()
     $ram25 = $ramTotal / 4;
 
     if ($ramAvailable < $ram10) {
-        $available .= "<span style='color: #" . RED . ";'>";
+        $available .= "<span class='red'>";
         http_response_code(500);
         $errorStatus = true;
         $ramError = "Less then 10% RAM available";
 
-    } else if ($ramAvailable < $ram25) {
-        $available .= "<span style='color: #" . ORANGE . ";'>";
+    } else if ($ramAvailable < $ram25 || true) {
+        $available .= "<span class='orange'>";
     } else {
-        $available .= "<span style='color: #" . GREEN . ";'>";
+        $available .= "<span class='green'>";
     }
     $available .= convert($ramAvailable * 1000) . "</span>";
 
@@ -341,14 +341,14 @@ function freeSwap()
     $available = "";
 
     if ($swapFree < $swap10) {
-        $available .= "<span style='color: #" . RED . ";'>";
+        $available .= "<span class='red'>";
         http_response_code(500);
         $errorStatus = true;
         $ramError = "Less then 10% SWAP available";
     } else if ($swapFree < $swap25) {
-        $available .= "<span style='color: #" . ORANGE . ";'>";
+        $available .= "<span class='orange'>";
     } else {
-        $available .= "<span style='color: #" . GREEN . ";'>";
+        $available .= "<span class='green'>";
     }
     $available .= convert($swapFree * 1000) . "</span>";
 
@@ -380,6 +380,8 @@ function htmlHeader()
 
         <title>Simple Server Health - <?= $_SERVER['HTTP_HOST']; ?></title>
 
+        <link rel="shortcut icon" href="favicon-ok.png" id="favicon">
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -400,6 +402,18 @@ function htmlHeader()
 
             .weight-normal {
                 font-weight: normal !important;
+            }
+
+            .green {
+                color: #<?=GREEN;?>;
+            }
+
+            .orange {
+                color: #<?=ORANGE;?>;
+            }
+
+            .red {
+                color: #<?=RED;?>;
             }
         </style>
 
@@ -444,9 +458,35 @@ function htmlFooter()
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+
+        $(document).ready(function() {
+
+
+            var hasOrange = false;
+            var hasRed = false;
+
+            $("*").each(function() {
+                if ($(this).hasClass('orange')) {
+                    hasOrange = true;
+                }
+                if ($(this).hasClass('hasRed')) {
+                    hasRed = true;
+                }
+            });
+
+            if (hasRed) {
+                $('#favicon').attr('href', 'favicon-red.png');
+            }
+            else if (hasOrange) {
+                $('#favicon').attr('href', 'favicon-orange.png');
+            }
+
+        });
+    </script>
 
     </body>
     </html>
@@ -463,15 +503,14 @@ function htmlFooter()
  */
 function printLoad($load, $cores = 1)
 {
-
     if (($load / $cores) < 0.7) {
-        return "<span style='color: #" . GREEN . ";'>$load</span>";
+        $class = 'green';
     } else if (($load / $cores) <= 1.0) {
-        return "<span style='color: #" . ORANGE . ";'>$load</span>";
+        $class = 'orange';
     } else {
-        return "<span style='color: #" . RED . ";'>$load</span>";
+        $class = 'red';
     }
-
+    return "<span class='{$class}'>$load</span>";
 }
 
 

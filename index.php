@@ -155,6 +155,8 @@ htmlHeader();
             </div>
 
             <?php
+
+
             /**
              * Page load time by server
              *
