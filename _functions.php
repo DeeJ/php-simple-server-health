@@ -137,7 +137,8 @@ function mysqlError()
 /**
  * Get time it takes to make a simple MYSQL query
  */
-function getMysqlQueryTime() {
+function getMysqlQueryTime()
+{
 
     $errorText = "<span class='red'>Failed to get query time</span>";
 
@@ -155,14 +156,13 @@ function getMysqlQueryTime() {
         $link = @mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
         $result = mysqli_query($link, "SELECT NOW()");
         @mysqli_close($link);
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
         return $errorText;
     }
 
     $endTime = microtimer();
     $totalTime = round(($endTime - $startTime), 6);
-    return $totalTime. ".s";
+    return $totalTime . ".s";
 }
 
 
@@ -463,25 +463,24 @@ function htmlFooter()
 
     <script>
 
-        $(document).ready(function() {
+        $(document).ready(function () {
 
 
             var hasOrange = false;
             var hasRed = false;
 
-            $("*").each(function() {
+            $("*").each(function () {
                 if ($(this).hasClass('orange')) {
                     hasOrange = true;
                 }
-                if ($(this).hasClass('hasRed')) {
+                if ($(this).hasClass('red')) {
                     hasRed = true;
                 }
             });
 
             if (hasRed) {
                 $('#favicon').attr('href', 'favicon-red.png');
-            }
-            else if (hasOrange) {
+            } else if (hasOrange) {
                 $('#favicon').attr('href', 'favicon-orange.png');
             }
 
@@ -581,13 +580,15 @@ function getServerVersion()
 /**
  * Deej debug / dump & die
  */
-function dd()
-{
-    $args = func_get_args();
-    foreach ($args as $arg) {
-        echo "<pre>";
-        var_dump($arg);
-        echo "</pre>";
+if (!function_exists('dd')) {
+    function dd()
+    {
+        $args = func_get_args();
+        foreach ($args as $arg) {
+            echo "<pre>";
+            var_dump($arg);
+            echo "</pre>";
+        }
+        die();
     }
-    die();
 }
